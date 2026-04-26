@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff1f5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>我们的恋爱相册</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section class="login-screen" id="loginScreen">
+    <form class="login-card glass-card" id="loginForm">
+      <p class="eyebrow">Private Love Space</p>
+      <h1>欢迎回到我们的秘密花园</h1>
+      <p class="hero-text">请选择你的身份，输入专属密码，进入只属于我们的回忆。</p>
+      <div class="account-grid" role="radiogroup" aria-label="选择登录账号">
+        <button class="account-card active" type="button" data-account="me">
+          <span id="loginAvatarMe">我</span>
+          <strong id="loginNameMe">小宝</strong>
+          <small>记录想给她的温柔</small>
+        </button>
+        <button class="account-card" type="button" data-account="her">
+          <span id="loginAvatarHer">她</span>
+          <strong id="loginNameHer">乖乖</strong>
+          <small>收藏被爱包围的瞬间</small>
+        </button>
+        <button class="account-card" type="button" data-account="admin">
+          <span id="loginAvatarAdmin">管</span>
+          <strong id="loginNameAdmin">管理员</strong>
+          <small>守护全部回忆内容</small>
+        </button>
+        <button class="account-card" type="button" data-account="guest">
+          <span id="loginAvatarGuest">游</span>
+          <strong id="loginNameGuest">游客</strong>
+          <small>免密码浏览公开回忆</small>
+        </button>
+      </div>
+      <input id="passwordInput" type="password" placeholder="请输入专属密码">
+      <p class="login-error" id="loginError" aria-live="polite"></p>
+      <button class="primary-btn full-btn" type="submit">进入我们的空间</button>
+    </form>
+  </section>
+
+  <div class="page-shell app-shell hidden" id="appShell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="回到首页">
+        <span class="brand-icon">♥</span>
+        <span>我们的恋爱相册</span>
+      </a>
+      <nav class="nav-links" aria-label="页面导航">
+        <a href="#photos">照片</a>
+        <a href="#videos">视频</a>
+        <a href="#letters" id="lettersNavLink">悄悄话</a>
+        <a href="#timeline">时间线</a>
+        <a href="#profile" id="profileNavLink">资料</a>
+        <a href="#adminPanel" id="adminNavLink">管理</a>
+      </nav>
+      <div class="user-bar">
+        <span id="currentUserText">当前身份：我</span>
+        <button class="logout-btn" id="logoutBtn" type="button">退出</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="floating-heart heart-one">♥</div>
+        <div class="floating-heart heart-two">♥</div>
+        <div class="hero-card glass-card">
+          <p class="eyebrow">Only For Us</p>
+          <h1>记录我们相爱的每一天</h1>
+          <p class="hero-text">不是所有瞬间都会重来，所以我想把和你有关的每一刻，都好好收藏起来。</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#photos">上传回忆</a>
+            <a class="ghost-btn" href="#letters">写给你</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="couple-card glass-card" aria-label="情侣信息">
+        <div class="lover">
+          <div class="avatar" id="loverAvatarMe">你</div>
+          <strong id="loverNameMe">小宝</strong>
+        </div>
+        <div class="love-days">
+          <span>♥</span>
+          <small>在一起多久了</small>
+          <strong id="daysTogether">520 天</strong>
+          <small>恋爱纪念日：2024.04.30</small>
+        </div>
+        <div class="lover">
+          <div class="avatar avatar-alt" id="loverAvatarHer">Ta</div>
+          <strong id="loverNameHer">乖乖</strong>
+        </div>
+      </section>
+
+      <section class="content-section" id="photos">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Photos</p>
+            <h2>我们的照片回忆</h2>
+            <p>每一张照片，都是我们认真相爱的证据。</p>
+          </div>
+          <label class="upload-btn edit-only">
+            上传照片
+            <input id="photoInput" type="file" accept="image/*" multiple>
+          </label>
+        </div>
+        <div class="grid-gallery" id="photoGallery">
+          <article class="memory-card placeholder-card">
+            <div class="placeholder-art">📷</div>
+            <h3>等待第一张回忆</h3>
+            <p>上传你们喜欢的照片，它会展示在这里。</p>
+          </article>
+        </div>
+        <div class="gallery-footer">
+          <p class="gallery-status" id="photoGalleryTip"></p>
+          <button class="ghost-btn hidden" id="photoLoadMoreBtn" type="button">加载更多照片</button>
+        </div>
+      </section>
+
+      <section class="content-section" id="videos">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Videos</p>
+            <h2>我们的视频时光</h2>
+            <p>有些瞬间，照片装不下，就交给视频来保存。</p>
+          </div>
+          <label class="upload-btn edit-only">
+            上传视频
+            <input id="videoInput" type="file" accept="video/*" multiple>
+          </label>
+        </div>
+        <div class="video-list" id="videoGallery">
+          <article class="memory-card placeholder-card">
+            <div class="placeholder-art">🎬</div>
+            <h3>等待第一段视频</h3>
+            <p>上传视频后，可以直接在页面里播放。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section letters-section" id="letters">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Love Notes</p>
+            <h2>写给你的悄悄话</h2>
+            <p>有些话想慢慢说给你听，今天先写在这里。</p>
+          </div>
+        </div>
+        <form class="letter-form glass-card" id="letterForm">
+          <textarea id="letterText" rows="5" placeholder="今天想对你说些什么呢？" required></textarea>
+          <div class="mood-row" role="group" aria-label="心情标签">
+            <button type="button" class="mood active">想你</button>
+            <button type="button" class="mood">爱你</button>
+            <button type="button" class="mood">开心</button>
+            <button type="button" class="mood">抱抱</button>
+            <button type="button" class="mood">晚安</button>
+          </div>
+          <button class="primary-btn full-btn" type="submit">发布悄悄话</button>
+        </form>
+        <div class="letters-list" id="lettersList">
+          <article class="letter-card">
+            <span>To 我的宝贝 · 爱你</span>
+            <p>谢谢你一直陪在我身边，希望以后的每一天都有你。</p>
+            <time>2026.04.26</time>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section" id="timeline">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Timeline</p>
+            <h2>爱情时间线</h2>
+            <p>那些重要的日子，都值得被温柔记住。</p>
+          </div>
+        </div>
+        <form class="timeline-form glass-card edit-only" id="timelineForm">
+          <input id="timelineDate" type="date" required>
+          <input id="timelineText" type="text" placeholder="记录一个重要时刻" required>
+          <button class="primary-btn" type="submit">添加时间线</button>
+        </form>
+        <div class="timeline" id="timelineList">
+        </div>
+      </section>
+
+      <section class="content-section" id="profile">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Profile</p>
+            <h2>设置名称和头像</h2>
+            <p>设置后，顶部身份和你发布的内容都会显示新的名称与头像。</p>
+          </div>
+        </div>
+        <form class="profile-form glass-card" id="profileForm">
+          <div class="profile-preview">
+            <span class="profile-avatar" id="profilePreviewAvatar">我</span>
+            <div>
+              <strong id="profilePreviewName">小宝</strong>
+              <p>当前账号资料</p>
+            </div>
+          </div>
+          <input id="profileNameInput" type="text" placeholder="设置你的显示名称" required>
+          <label class="upload-btn">
+            选择头像
+            <input id="profileAvatarInput" type="file" accept="image/*">
+          </label>
+          <button class="primary-btn full-btn" type="submit">保存资料</button>
+        </form>
+      </section>
+
+      <section class="content-section admin-panel hidden" id="adminPanel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Admin</p>
+            <h2>管理员管理区</h2>
+            <p>批量删除属于危险操作，仅管理员账号可以使用。</p>
+          </div>
+        </div>
+        <div class="admin-grid glass-card">
+          <button class="action-btn danger-btn" type="button" data-bulk-delete="photos">删除全部照片</button>
+          <button class="action-btn danger-btn" type="button" data-bulk-delete="videos">删除全部视频</button>
+          <button class="action-btn danger-btn" type="button" data-bulk-delete="letters">删除全部悄悄话</button>
+          <button class="action-btn danger-btn" type="button" data-bulk-delete="timeline">删除全部时间线</button>
+          <button class="action-btn danger-btn danger-solid" type="button" data-bulk-delete="all">清空全部数据</button>
+        </div>
+        <div class="request-panel glass-card">
+          <h3>删除申请</h3>
+          <div class="request-list" id="deleteRequestList"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">愿我们一直相爱，一直浪漫，一直奔向更好的未来。</footer>
+  </div>
+
+  <script src="media.config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
